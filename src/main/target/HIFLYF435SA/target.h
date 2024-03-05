@@ -21,7 +21,7 @@
 #pragma once
 
 #define TARGET_BOARD_IDENTIFIER "HFF4"
-#define USBD_PRODUCT_STRING  "HIFLYF435"
+#define USBD_PRODUCT_STRING  "HIFLYF435SA"
 
 #define LED0_PIN                PB9
 #define LED1_PIN                PA14
@@ -46,22 +46,19 @@
 #define GYRO_1_CS_PIN           PC2
 #define GYRO_1_SPI_INSTANCE     SPI1
 
-#define GYRO_1_CS_PIN           PC2
-#define GYRO_1_SPI_INSTANCE     SPI1
-
 #define USE_EXTI
 #define USE_GYRO_EXTI
 #define GYRO_1_EXTI_PIN         PC3
 #define USE_MPU_DATA_READY_SIGNAL
 
 #define USE_GYRO
-#define USE_GYRO_SPI_MPU6000
+#define USE_GYRO_SPI_ICM42688P
 #define USE_GYRO_SPI_MPU6500
 #define GYRO_1_ALIGN            CW270_DEG
 //#define GYRO_1_ALIGN            CW180_DEG // XXX MPU6500 align, must be configured after flashing
 
 #define USE_ACC
-#define USE_ACC_SPI_MPU6000
+#define USE_ACC_SPI_ICM42688P
 #define USE_ACC_SPI_MPU6500
 
 #define USE_MAG
@@ -71,33 +68,32 @@
 
 // *************** Baro **************************
 #define USE_I2C
-
-#if defined(BARO_I2C1)
-// Useful for MATEKF405_OSD, since it does not have the SCL / SDA pads
-#define USE_I2C_DEVICE_3
-
-#define I2C_DEVICE              (I2CDEV_3)
-#define I2C3_SCL                PA8        // S4 pad
-#define I2C3_SDA                PC9        // S6 pad
-#define BARO_I2C_INSTANCE       (I2CDEV_3)
-#else
 #define USE_I2C_DEVICE_1
 #define I2C_DEVICE              (I2CDEV_1)
 #define I2C1_SCL                PB6        // SCL pad
 #define I2C1_SDA                PB7        // SDA pad
-#define BARO_I2C_INSTANCE       (I2CDEV_1)
-#endif
+#define USE_I2C_PULLUP
 
 #define USE_BARO
 #define USE_BARO_BMP280
-//#define USE_BARO_MS5611
-#define USE_BARO_BMP085
+#define USE_BARO_DPS310
+#define BARO_I2C_INSTANCE       (I2CDEV_1)
 
+// *************** OSD *****************************
+#define USE_SPI_DEVICE_2
+#define SPI2_SCK_PIN            PB13
+#define SPI2_MISO_PIN           PB14
+#define SPI2_MOSI_PIN           PB15
+
+#define USE_MAX7456
+#define MAX7456_SPI_INSTANCE    SPI2
+#define MAX7456_SPI_CS_PIN      PB10
+
+// *************** BLACKBOX **************************
 #define USE_SPI_DEVICE_3
 #define SPI3_SCK_PIN            PB3
 #define SPI3_MISO_PIN           PB4
 #define SPI3_MOSI_PIN           PB5
-
 
 #define ENABLE_BLACKBOX_LOGGING_ON_SPIFLASH_BY_DEFAULT
 #define USE_FLASHFS
@@ -117,16 +113,6 @@
 #define SDCARD_SPI_INSTANCE     SPI3
 #define SDCARD_SPI_CS_PIN       PC1
 #define SPI3_TX_DMA_OPT                     1     // DMA 1 Stream 7 Channel 0 */
-
-// *************** OSD *****************************
-#define USE_SPI_DEVICE_2
-#define SPI2_SCK_PIN            PB13
-#define SPI2_MISO_PIN           PB14
-#define SPI2_MOSI_PIN           PB15
-
-#define USE_MAX7456
-#define MAX7456_SPI_INSTANCE    SPI2
-#define MAX7456_SPI_CS_PIN      PB10
 
 // *************** UART *****************************
 #define USE_VCP
